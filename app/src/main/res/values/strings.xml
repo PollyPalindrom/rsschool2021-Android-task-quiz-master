@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Quiz</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="first_question">Question 1</string>
+    <string name="second_question">Question 2</string>
+    <string name="third_question">Question 3</string>
+    <string name="forth_question">Question 4</string>
+    <string name="fifth_question">Question 5</string>
+    <string name="first_option_for_first_question">A</string>
+    <string name="second_option_for_first_question">B</string>
+    <string name="third_option_for_first_question">C</string>
+    <string name="forth_option_for_first_question">D</string>
+    <string name="fifth_option_for_first_question">E</string>
+    <string name="first_option_for_second_question">A</string>
+    <string name="second_option_for_second_question">B</string>
+    <string name="third_option_for_second_question">C</string>
+    <string name="forth_option_for_second_question">D</string>
+    <string name="fifth_option_for_second_question">E</string>
+    <string name="first_option_for_third_question">A</string>
+    <string name="second_option_for_third_question">B</string>
+    <string name="third_option_for_third_question">C</string>
+    <string name="forth_option_for_third_question">D</string>
+    <string name="fifth_option_for_third_question">E</string>
+    <string name="first_option_for_forth_question">A</string>
+    <string name="second_option_for_forth_question">B</string>
+    <string name="third_option_for_forth_question">C</string>
+    <string name="forth_option_for_forth_question">D</string>
+    <string name="fifth_option_for_forth_question">E</string>
+    <string name="first_option_for_fifth_question">A</string>
+    <string name="second_option_for_fifth_question">B</string>
+    <string name="third_option_for_fifth_question">C</string>
+    <string name="forth_option_for_fifth_question">D</string>
+    <string name="fifth_option_for_fifth_question">E</string>
+    <string name="answer_for_first_question">A</string>
+    <string name="answer_for_second_question">B</string>
+    <string name="answer_for_third_question">C</string>
+    <string name="answer_for_forth_question">D</string>
+    <string name="answer_for_fifth_question">E</string>
+</resources>

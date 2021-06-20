@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="questions">
+        <item>@string/first_question</item>
+        <item>@string/second_question</item>
+        <item>@string/third_question</item>
+        <item>@string/forth_question</item>
+        <item>@string/fifth_question</item>
+    </string-array>
+    <string-array name="options">
+        <item>@string/first_option_for_first_question</item>
+        <item>@string/second_option_for_first_question</item>
+        <item>@string/third_option_for_first_question</item>
+        <item>@string/forth_option_for_first_question</item>
+        <item>@string/fifth_option_for_first_question</item>
+        <item>@string/first_option_for_second_question</item>
+        <item>@string/second_option_for_second_question</item>
+        <item>@string/third_option_for_second_question</item>
+        <item>@string/forth_option_for_second_question</item>
+        <item>@string/fifth_option_for_second_question</item>
+        <item>@string/first_option_for_third_question</item>
+        <item>@string/second_option_for_third_question</item>
+        <item>@string/third_option_for_third_question</item>
+        <item>@string/forth_option_for_third_question</item>
+        <item>@string/fifth_option_for_third_question</item>
+        <item>@string/first_option_for_forth_question</item>
+        <item>@string/second_option_for_forth_question</item>
+        <item>@string/third_option_for_forth_question</item>
+        <item>@string/forth_option_for_forth_question</item>
+        <item>@string/fifth_option_for_forth_question</item>
+        <item>@string/first_option_for_fifth_question</item>
+        <item>@string/second_option_for_fifth_question</item>
+        <item>@string/third_option_for_fifth_question</item>
+        <item>@string/forth_option_for_fifth_question</item>
+        <item>@string/fifth_option_for_fifth_question</item>
+    </string-array>
+    <string-array name="right_answers">
+        <item>@string/answer_for_first_question</item>
+        <item>@string/answer_for_second_question</item>
+        <item>@string/answer_for_third_question</item>
+        <item>@string/answer_for_forth_question</item>
+        <item>@string/answer_for_fifth_question</item>
+    </string-array>
+</resources>
