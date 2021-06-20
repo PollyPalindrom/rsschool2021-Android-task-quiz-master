@@ -5,6 +5,7 @@ import android.content.Intent.ACTION_SEND
 import android.content.Intent.EXTRA_TEXT
 import android.net.Uri
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,11 @@ class FinishFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        context?.theme?.applyStyle(R.style.Theme_Quiz_First, true)
+        val mainActivity = activity as MainActivity
+        context?.theme?.applyStyle(R.style.Theme_Quiz_Sixth, true)
+        val statusBarColor = TypedValue()
+        context?.theme?.resolveAttribute(android.R.attr.statusBarColor, statusBarColor, true)
+        mainActivity.window?.statusBarColor = statusBarColor.data
         binding = FragmentFinishBinding.inflate(inflater)
         return binding?.root
     }
