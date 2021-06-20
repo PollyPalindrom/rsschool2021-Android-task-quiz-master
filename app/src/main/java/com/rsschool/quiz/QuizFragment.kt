@@ -42,7 +42,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         binding?.previousButton?.setOnClickListener {
             returnToPreviousPage()
         }
-        binding?.nextButton?.setOnClickListener {//тут восклицательные знаки
+        binding?.nextButton?.setOnClickListener {
             binding?.radioGroup?.forEachIndexed { _, view ->
                 if ((view as RadioButton).isChecked) {
                     mainActivity?.binding?.viewPager?.currentItem?.let {
@@ -51,7 +51,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
                 }
             }
             mainActivity.binding?.viewPager?.currentItem?.plus(1)?.let { it1 ->
-                mainActivity.binding?.viewPager?.setCurrentItem(//тут восклицательные знаки
+                mainActivity.binding?.viewPager?.setCurrentItem(
                     it1,
                     false
                 )
@@ -75,7 +75,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         val mainActivity = activity as MainActivity
         if (mainActivity.binding?.viewPager?.currentItem != 0) {
             mainActivity.binding?.viewPager?.currentItem?.minus(1)?.let {
-                mainActivity.binding?.viewPager?.setCurrentItem(//тут восклицательные знаки
+                mainActivity.binding?.viewPager?.setCurrentItem(
                     it,
                     false
                 )
