@@ -1,5 +1,7 @@
 package com.rsschool.quiz
 
+import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -7,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.forEachIndexed
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentQuizBinding
@@ -33,25 +36,26 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         val mainActivity = activity as MainActivity
         setPageContent()
         binding?.nextButton?.isEnabled = false
-        if (mainActivity.currentPage == 0) {
+        if (mainActivity.getPage() == 0) {
             binding?.previousButton?.isEnabled = false
             binding?.toolbar?.isEnabled = false
             binding?.toolbar?.navigationIcon?.setTint(16558238)
         }
-        if (mainActivity.binding?.viewPager?.currentItem == 4) binding?.nextButton?.text = "Submit"
+        if (mainActivity.getActivityMainBinding()?.viewPager?.currentItem == 4) binding?.nextButton?.text =
+            "Submit"
         binding?.previousButton?.setOnClickListener {
             returnToPreviousPage()
         }
         binding?.nextButton?.setOnClickListener {
             binding?.radioGroup?.forEachIndexed { _, view ->
                 if ((view as RadioButton).isChecked) {
-                    mainActivity?.binding?.viewPager?.currentItem?.let {
+                    mainActivity.getActivityMainBinding()?.viewPager?.currentItem?.let {
                         mainActivity.listOfAnswers[it] = view.text.toString()
                     }
                 }
             }
-            mainActivity.binding?.viewPager?.currentItem?.plus(1)?.let { it1 ->
-                mainActivity.binding?.viewPager?.setCurrentItem(
+            mainActivity.getActivityMainBinding()?.viewPager?.currentItem?.plus(1)?.let { it1 ->
+                mainActivity.getActivityMainBinding()?.viewPager?.setCurrentItem(
                     it1,
                     false
                 )
@@ -64,18 +68,28 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         binding?.radioGroup?.setOnCheckedChangeListener { _, _ ->
             binding?.nextButton?.isEnabled = true
         }
+        val callback = mainActivity.onBackPressedDispatcher.addCallback(mainActivity,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if(mainActivity.getActivityMainBinding()?.viewPager?.currentItem!=0) returnToPreviousPage()
+                    else {
+                        isEnabled=false
+                        requireActivity().onBackPressed()
+                    }
+                }
+            })
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         binding = null
+        super.onDestroy()
     }
 
     private fun returnToPreviousPage() {
         val mainActivity = activity as MainActivity
-        if (mainActivity.binding?.viewPager?.currentItem != 0) {
-            mainActivity.binding?.viewPager?.currentItem?.minus(1)?.let {
-                mainActivity.binding?.viewPager?.setCurrentItem(
+        if (mainActivity.getActivityMainBinding()?.viewPager?.currentItem != 0) {
+            mainActivity.getActivityMainBinding()?.viewPager?.currentItem?.minus(1)?.let {
+                mainActivity.getActivityMainBinding()?.viewPager?.setCurrentItem(
                     it,
                     false
                 )
@@ -93,15 +107,14 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         val arrayOfQuestions = context?.resources?.getStringArray(R.array.questions)
         val arrayOfOptions = context?.resources?.getStringArray(R.array.options)
         val mainActivity = activity as MainActivity
-        binding?.toolbar?.title = "Question " + (mainActivity.currentPage + 1).toString()
-        binding?.question?.text = arrayOfQuestions?.get(mainActivity.currentPage)
-        binding?.optionOne?.text = arrayOfOptions?.get(mainActivity.currentPage * 5)
-        binding?.optionTwo?.text = arrayOfOptions?.get(mainActivity.currentPage * 5 + 1)
-        binding?.optionThree?.text = arrayOfOptions?.get(mainActivity.currentPage * 5 + 2)
-        binding?.optionFour?.text = arrayOfOptions?.get(mainActivity.currentPage * 5 + 3)
-        binding?.optionFive?.text = arrayOfOptions?.get(mainActivity.currentPage * 5 + 4)
+        binding?.toolbar?.title = "Question " + (mainActivity.getPage() + 1).toString()
+        binding?.radioGroup?.forEachIndexed { index, view ->
+            (view as RadioButton).text = arrayOfOptions?.get(mainActivity.getPage() * 5 + index)
+        }
+        binding?.question?.text = arrayOfQuestions?.get(mainActivity.getPage())
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun setFragmentTheme() {
         val mainActivity = activity as MainActivity
         arguments?.let {
@@ -111,10 +124,21 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
             )
 
         }
-
-        val statusBarColor = TypedValue()
-        context?.theme?.resolveAttribute(android.R.attr.statusBarColor, statusBarColor, true)
-        mainActivity.window?.statusBarColor = statusBarColor.data
+        val mode = context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
+        when (mode) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                mainActivity.window?.statusBarColor = R.color.black
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                val statusBarColor = TypedValue()
+                context?.theme?.resolveAttribute(
+                    android.R.attr.statusBarColor,
+                    statusBarColor,
+                    true
+                )
+                mainActivity.window?.statusBarColor = statusBarColor.data
+            }
+        }
     }
 
     companion object {

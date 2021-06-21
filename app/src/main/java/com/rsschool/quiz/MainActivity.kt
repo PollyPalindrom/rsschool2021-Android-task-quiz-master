@@ -12,8 +12,8 @@ import com.rsschool.quiz.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     var listOfAnswers: MutableList<String> =
         mutableListOf("Nothing", "Nothing", "Nothing", "Nothing", "Nothing")
-    var currentPage = 0
-    var binding: ActivityMainBinding? = null
+    private var currentPage = 0
+    private var binding: ActivityMainBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,10 +23,12 @@ class MainActivity : AppCompatActivity() {
             ViewPagerAdapter(getNewFragmentList(), supportFragmentManager, lifecycle)
         binding?.viewPager?.isUserInputEnabled = false
     }
+
     override fun onDestroy() {
         super.onDestroy()
-        binding=null
+        binding = null
     }
+
     fun getNewFragmentList(): ArrayList<Fragment> {
         return arrayListOf(
             QuizFragment.newInstance(R.style.Theme_Quiz_First),
@@ -36,6 +38,14 @@ class MainActivity : AppCompatActivity() {
             QuizFragment.newInstance(R.style.Theme_Quiz_Fifth),
             FinishFragment()
         )
+    }
+
+    fun getPage(): Int {
+        return currentPage
+    }
+
+    fun getActivityMainBinding(): ActivityMainBinding? {
+        return binding
     }
 
     inner class ViewPagerAdapter(
