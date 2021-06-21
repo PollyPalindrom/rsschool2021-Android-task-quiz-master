@@ -68,16 +68,6 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         binding?.radioGroup?.setOnCheckedChangeListener { _, _ ->
             binding?.nextButton?.isEnabled = true
         }
-        val callback = mainActivity.onBackPressedDispatcher.addCallback(mainActivity, // Действие системной кнопки назад на фрагментах с вопросами такое же,
-            object : OnBackPressedCallback(true) {                            //как и у тулбара. На последней и первой страничках с помощью этой кнопки можно выйти из приложения
-                override fun handleOnBackPressed() {
-                    if (mainActivity.getActivityMainBinding()?.viewPager?.currentItem != 0) returnToPreviousPage()
-                    else {
-                        isEnabled = false
-                        requireActivity().onBackPressed()
-                    }
-                }
-            })
     }
 
     override fun onDestroy() {
