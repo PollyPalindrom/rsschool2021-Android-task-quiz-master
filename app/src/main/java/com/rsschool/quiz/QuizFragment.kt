@@ -71,9 +71,9 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         val callback = mainActivity.onBackPressedDispatcher.addCallback(mainActivity,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if(mainActivity.getActivityMainBinding()?.viewPager?.currentItem!=0) returnToPreviousPage()
+                    if (mainActivity.getActivityMainBinding()?.viewPager?.currentItem != 0) returnToPreviousPage()
                     else {
-                        isEnabled=false
+                        isEnabled = false
                         requireActivity().onBackPressed()
                     }
                 }

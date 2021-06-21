@@ -45,7 +45,7 @@ class FinishFragment : Fragment() {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(
-                    Intent.EXTRA_TEXT,generateShareMessage(score)
+                    Intent.EXTRA_TEXT, generateShareMessage(score)
                 )
                 type = "text/plain"
             }
