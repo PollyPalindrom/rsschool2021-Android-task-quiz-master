@@ -1,6 +1,7 @@
 package com.rsschool.quiz
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.TypedValue
@@ -39,7 +40,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         if (mainActivity.getPage() == 0) {
             binding?.previousButton?.isEnabled = false
             binding?.toolbar?.isEnabled = false
-            binding?.toolbar?.navigationIcon?.setTint(16558238)
+            binding?.toolbar?.navigationIcon=null
         }
         if (mainActivity.getActivityMainBinding()?.viewPager?.currentItem == 4) binding?.nextButton?.text =
             "Submit"
@@ -68,6 +69,25 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         binding?.radioGroup?.setOnCheckedChangeListener { _, _ ->
             binding?.nextButton?.isEnabled = true
         }
+        mainActivity.onBackPressedDispatcher.addCallback(mainActivity,object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                if(mainActivity.getActivityMainBinding()?.viewPager?.currentItem!=0 && mainActivity.getPage()!=5){
+                    returnToPreviousPage()
+
+                } else {
+                    AlertDialog.Builder(mainActivity).apply {
+                        setTitle("Подтверждение")
+                        setMessage("Вы уверены, что хотите выйти из программы?")
+                        setPositiveButton("Дя:3") { _, _ ->
+                            isEnabled = false
+                            mainActivity.onBackPressed()
+                        }
+                        setNegativeButton("Неа:<") { _, _ -> }
+                        setCancelable(true)
+                    }.create().show()
+                }
+            }
+        })
     }
 
     override fun onDestroy() {
