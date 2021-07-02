@@ -1,7 +1,6 @@
 package com.rsschool.quiz
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.TypedValue
@@ -9,8 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.forEachIndexed
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FragmentQuizBinding
@@ -40,12 +37,12 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         if (mainActivity.getPage() == 0) {
             binding?.previousButton?.isEnabled = false
             binding?.toolbar?.isEnabled = false
-            binding?.toolbar?.navigationIcon=null
+            binding?.toolbar?.navigationIcon = null
         }
         if (mainActivity.getActivityMainBinding()?.viewPager?.currentItem == 4) binding?.nextButton?.text =
             "Submit"
         binding?.previousButton?.setOnClickListener {
-            returnToPreviousPage()
+            (activity as MainActivity).returnToPreviousPage()
         }
         binding?.nextButton?.setOnClickListener {
             binding?.radioGroup?.forEachIndexed { _, view ->
@@ -64,53 +61,16 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
 
         }
         binding?.toolbar?.setOnClickListener {
-            returnToPreviousPage()
+            (activity as MainActivity).returnToPreviousPage()
         }
         binding?.radioGroup?.setOnCheckedChangeListener { _, _ ->
             binding?.nextButton?.isEnabled = true
         }
-        mainActivity.onBackPressedDispatcher.addCallback(mainActivity,object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                if(mainActivity.getActivityMainBinding()?.viewPager?.currentItem!=0 && mainActivity.getPage()!=5){
-                    returnToPreviousPage()
-
-                } else {
-                    AlertDialog.Builder(mainActivity).apply {
-                        setTitle("Подтверждение")
-                        setMessage("Вы уверены, что хотите выйти из программы?")
-                        setPositiveButton("Дя:3") { _, _ ->
-                            isEnabled = false
-                            mainActivity.onBackPressed()
-                        }
-                        setNegativeButton("Неа:<") { _, _ -> }
-                        setCancelable(true)
-                    }.create().show()
-                }
-            }
-        })
     }
 
     override fun onDestroy() {
         binding = null
         super.onDestroy()
-    }
-
-    private fun returnToPreviousPage() {
-        val mainActivity = activity as MainActivity
-        if (mainActivity.getActivityMainBinding()?.viewPager?.currentItem != 0) {
-            mainActivity.getActivityMainBinding()?.viewPager?.currentItem?.minus(1)?.let {
-                mainActivity.getActivityMainBinding()?.viewPager?.setCurrentItem(
-                    it,
-                    false
-                )
-            }
-        } else {
-            Toast.makeText(
-                mainActivity?.applicationContext,
-                "It is first page",
-                Toast.LENGTH_LONG
-            ).show()
-        }
     }
 
     private fun setPageContent() {

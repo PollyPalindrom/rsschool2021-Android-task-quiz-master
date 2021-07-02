@@ -1,11 +1,12 @@
 package com.rsschool.quiz
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
-import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.rsschool.quiz.databinding.ActivityMainBinding
 
@@ -42,6 +43,40 @@ class MainActivity : AppCompatActivity() {
 
     fun getPage(): Int {
         return currentPage
+    }
+
+    override fun onBackPressed() {
+        if (binding?.viewPager?.currentItem != 0 && getPage() != 5) {
+            returnToPreviousPage()
+        } else {
+            AlertDialog.Builder(this).apply {
+                setTitle("Подтверждение")
+                setMessage("Вы уверены, что хотите выйти из программы?")
+                setPositiveButton("Дя:3") { _, _ ->
+                    //isEnabled = false
+                    super.onBackPressed()
+                }
+                setNegativeButton("Неа:<") { _, _ -> }
+                setCancelable(true)
+            }.create().show()
+        }
+    }
+
+    fun returnToPreviousPage() {
+        if (binding?.viewPager?.currentItem != 0) {
+            binding?.viewPager?.currentItem?.minus(1)?.let {
+                binding?.viewPager?.setCurrentItem(
+                    it,
+                    false
+                )
+            }
+        } else {
+            Toast.makeText(
+                applicationContext,
+                "It is first page",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 
     fun getActivityMainBinding(): ActivityMainBinding? {
