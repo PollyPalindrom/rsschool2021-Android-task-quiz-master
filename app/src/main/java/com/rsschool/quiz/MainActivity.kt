@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
                 setTitle("Подтверждение")
                 setMessage("Вы уверены, что хотите выйти из программы?")
                 setPositiveButton("Дя:3") { _, _ ->
-                    //isEnabled = false
                     super.onBackPressed()
                 }
                 setNegativeButton("Неа:<") { _, _ -> }
